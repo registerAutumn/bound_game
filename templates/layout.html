@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Score Board</title>
+	<script src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+	<link rel="stylesheet" href="/static/css/main.css">
+</head>
+<body marginleft="0" margintop="0">
+	<nav>
+		<ul>
+			<li><a href="/rule">Rule</a></li>
+			<li><a href="/score_board">ScoreBoard</a></li>
+			<li><a href="/submit">Submit</a></li>
+			{% if not session['user_name'] %}
+				<li><a href="#">Registrar/Login</a></li>
+			{% else %}
+				<li>使用者：{{ session['user_name'] }}</li>
+			{% endif%}
+		</ul>
+	</nav>
+	<div class="content">
+		{% block contents %}{% endblock %}
+	</div>
+	<div class="registrar">
+		<input type="text" id="user_name" placeholder="帳號">
+		<input type="password" id="user_pass" placeholder="密碼">
+		<input type="button" id="regis" value="送出">
+		<input type="button" id="login" value="登入">
+	</div>
+</body>
+{% if not session['user_name'] %}
+<script>
+	$("nav a").last().bind('click', function(){ $(".registrar").toggle(); return false;});
+</script>
+{% endif %}
+<script>
+	$("#regis").bind('click', function(){
+		if(check($("#user_name").val(), $("#user_pass").val())){
+			$.post("/registrar", {'user_name': $("#user_name").val(), 'user_pass': $("#user_pass").val()}, function(success){if(eval(success)){location.reload();}})
+		}
+	})
+	$("#login").bind('click', function(){
+		if(check($("#user_name").val(), $("#user_pass").val())){
+			$.post("/login", {'user_name': $("#user_name").val(), 'user_pass': $("#user_pass").val()}, function(success){if(eval(success)){location.reload();}})
+		}
+	})
+	function check(u, p){
+		if(u == "" || p == ""){
+			return false;
+		}
+		return true;
+	}
+	$("link").each(function(){
+		d = new Date();
+		$(this).attr("href", $(this).attr("href") + "?" + d.getTime());
+	})
+</script>
+</html>

@@ -1,0 +1,17 @@
+.rule{
+	width: 50%;
+	height: 500px;
+	margin: auto;
+	margin-top: 5%;
+	border-radius: 10px;
+	background: #cfcfcf;
+	padding: 5%;
+}
+
+.rule li{
+	line-height: 50px;
+	text-align: 30px;
+	margin: 0px !important;
+	padding: 0px !important;
+	list-style-type: square;
+}

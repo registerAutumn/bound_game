@@ -1,0 +1,49 @@
+{% extends "layout.html" %}
+{% block contents %}
+	<link rel="stylesheet" href="/static/css/submit.css">
+	<table width="80%" align="center">
+		<thead>
+			<tr>
+				<th>題號</th>
+				<th>Flag</th>
+				<th>-</th>
+			</tr>
+		</thead>
+		{% for data in final_data %}
+			<tr>
+				<td>{{ data[0] }}</td>
+				{% if not data[1] in session['solved'] %}
+					<td>
+						<input type="text" id="flags_{{data[0]}}" size="40">
+					</td>
+					<td>
+						<input type="button" value="送出" onclick="send_flag({{data[0]}})">
+					</td>
+				{% else %}
+					<td>
+						<center>Solved!!!</center>
+					</td>
+					<td>
+						&nbsp;
+					</td>
+				{% endif %}
+			</tr>
+		{% endfor %}
+	</table>
+	<script>
+		function send_flag(id){
+			if($("#flags_" + id).val() == ""){
+				alert('不寫不要送啊！！');
+				return;
+			}
+			$.post("/" + id , {'flags': $("#flags_" + id).val()}, function(success){
+				if(!eval(success)){
+					alert('送錯Key囉');
+				}else{
+					alert('恭喜你完成一題');
+					location.reload();
+				}
+			})
+		}
+	</script>
+{% endblock %}

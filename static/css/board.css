@@ -1,0 +1,19 @@
+table{
+	margin-top: 5%;
+	border: 0px;
+	font-size: 1.1em;
+	line-height: 40px;
+}
+
+thead{
+	background: #23CE6B;
+}
+
+th:not(:last-child){
+	width: 40%;
+}
+
+td{
+	text-align: center;
+	background: #EDF5FC;
+}
